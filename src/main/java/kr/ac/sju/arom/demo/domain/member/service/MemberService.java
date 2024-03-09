@@ -43,7 +43,7 @@ public class MemberService {
                     return new EntityNotFoundException("이메일 또는 비밀번호가 잘못되었습니다.");
                 });
 
-        if (!member.getPassword().equals(request.password())) {
+        if (passwordEncoder.matches(request.password(), member.getPassword())) { // 비밀번호 체크
             LOGGER.info("[login] 올바르지 않은 비밀번호. email : {}", request.email() );
             throw new IllegalArgumentException("이메일 또는 비밀번호가 잘못되었습니다.");
         }
